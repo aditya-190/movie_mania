@@ -108,12 +108,7 @@ class _EditScreenState extends State<EditScreen> {
                 onPressed: () {
                   movies = Movies(movies.movieID, _name, _director, _imageURL);
                   SQLHelper.db.editMovie(movies).whenComplete(() => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MovieList(),
-                          ),
-                        )
+                        Navigator.pop(context)
                       });
                 },
                 child: Text("Save Changes"),

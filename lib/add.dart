@@ -99,12 +99,7 @@ class _AddScreenState extends State<AddScreen> {
                   movies = Movies(
                       Random().nextInt(100000), _name, _director, _imageURL);
                   SQLHelper.db.addMovies(movies).whenComplete(() => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MovieList(),
-                          ),
-                        )
+                        Navigator.pop(context)
                       });
                 },
                 child: Text("Add Movie"),

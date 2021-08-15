@@ -14,9 +14,8 @@ class MovieList extends StatefulWidget {
 class _MovieListState extends State<MovieList> {
   List<Movies> _moviesList = [];
 
-  @override
-  void initState() {
-    super.initState();
+  void _fetchData() {
+    _moviesList.clear();
     SQLHelper.db.fetchAllMovies().then((movies) {
       setState(() {
         movies.forEach((note) {
@@ -26,13 +25,19 @@ class _MovieListState extends State<MovieList> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
   void _addMovieToList() {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => AddScreen(),
       ),
-    );
+    ).whenComplete(() => _fetchData());
   }
 
   void _removeMovieFromList(int index, int id) {
@@ -49,7 +54,7 @@ class _MovieListState extends State<MovieList> {
         builder: (context) =>
             EditScreen(index: index, movies: _moviesList[index]),
       ),
-    );
+    ).whenComplete(() => _fetchData());
   }
 
   Widget _buildMovieItem(Movies movieItem, int index) {
